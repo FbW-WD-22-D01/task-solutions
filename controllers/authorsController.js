@@ -3,7 +3,11 @@ import Author from '../models/Author.js'
 
 /** @type {import("express").RequestHandler} */
 export async function getAllAuthors (req, res, next) {
-  const authors = await Author.find()
+  let query = Author.find()
+
+  query = query.populate('books')
+
+  const authors = await query
   res.status(200).send(authors)
 }
 
