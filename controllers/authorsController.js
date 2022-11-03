@@ -5,7 +5,7 @@ import Author from '../models/Author.js'
 export async function getAllAuthors (req, res, next) {
   let query = Author.find()
 
-  query = query.populate('books')
+  query = query.populate('books', 'title -_id')
 
   const authors = await query
   res.status(200).send(authors)
