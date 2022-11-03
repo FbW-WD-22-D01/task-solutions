@@ -10,7 +10,7 @@ export async function getAllBooks (req, res, next) {
 /** @type {import("express").RequestHandler} */
 export async function getBookById (req, res, next) {
   const id = req.params.id
-  const book = Book.findById(id)
+  const book = await Book.findById(id)
 
   if(!book) throw httpErrors.NotFound()
 

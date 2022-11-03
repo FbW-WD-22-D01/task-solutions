@@ -1,16 +1,24 @@
 import httpErrors from 'http-errors'
+import Author from '../models/Author.js'
 
 /** @type {import("express").RequestHandler} */
 export async function getAllAuthors (req, res, next) {
-  throw httpErrors.NotImplemented()
+  const authors = await Author.find()
+  res.status(200).send(authors)
 }
 
 /** @type {import("express").RequestHandler} */
 export async function getAuthorById (req, res, next) {
-  throw httpErrors.NotImplemented()
+  const id = req.params.id
+  const author = await Author.findById(id)
+
+  if(!author) throw httpErrors.NotFound()
+
+  res.status(200).send(author)
 }
 
 /** @type {import("express").RequestHandler} */
 export async function createAuthor (req, res, next) {
-  throw httpErrors.NotImplemented()
+  const author = await Author.create(req.body)
+  res.status(201).send(author)
 }
