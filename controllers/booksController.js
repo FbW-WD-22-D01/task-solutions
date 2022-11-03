@@ -1,5 +1,6 @@
 import httpErrors from 'http-errors'
 import Book from '../models/Book.js'
+import Publisher from '../models/Publisher.js'
 
 /** @type {import("express").RequestHandler} */
 export async function getAllBooks (req, res, next) {
@@ -20,5 +21,11 @@ export async function getBookById (req, res, next) {
 /** @type {import("express").RequestHandler} */
 export async function createBook (req, res, next) {
   const book = await Book.create(req.body)
+
+  // add book id to publisher
+  const publisher = await Publisher.findById(book.publisher)
+  publisher.books.push(book._id)
+  await publisher.save()
+
   res.status(201).send(book)
 }
