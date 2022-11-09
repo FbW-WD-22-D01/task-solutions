@@ -35,7 +35,9 @@ export async function login(req, res) {
 export async function getUser(req, res) {
   const token = req.headers['x-auth']
 
-  const user = await User.findOne().where('token').equals(token)
+  const user = await User.findOne()
+    .where('token').equals(token)
+    .select('-token -password')
 
   if(!user) throw httpErrors.Unauthorized('You shall not pass')
 
