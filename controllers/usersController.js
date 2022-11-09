@@ -31,5 +31,11 @@ export async function login(req, res) {
 
 /** @type {import("express").RequestHandler} */
 export async function getUser(req, res) {
-  throw httpErrors.NotImplemented()
+  const token = req.headers['x-auth']
+
+  const user = await User.findOne().where('token').equals(token)
+
+  if(!user) throw httpErrors.Unauthorized('You shall not pass')
+
+  res.status(200).send(user)
 }
