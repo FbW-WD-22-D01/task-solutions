@@ -13,7 +13,7 @@ installiere alles mit `npm install`
 const user = {
     name: 'Chuck Norris',
     email: 'chuck@norris.de',
-    password: 'thisismysecretpassword'
+    password: '!1Thisismysecretpassword'
 }
 ```
 
