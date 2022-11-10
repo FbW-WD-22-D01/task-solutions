@@ -5,7 +5,6 @@ import User from '../models/Users.js'
 /** @type {import("express").RequestHandler} */
 export async function register(req, res) {
   const user = new User(req.body)
-  user.password = await bcrypt.hash(user.password, 10)
   user.generateToken()
 
   await user.save()
