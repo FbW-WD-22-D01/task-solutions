@@ -19,6 +19,11 @@ Schema.methods.toJSON = function () {
   return result
 }
 
+Schema.methods.generateToken = function () {
+  const user = this
+  user.token = Math.random().toString(36).slice(2, 7)
+}
+
 const User = mongoose.model('User', Schema, 'users')
 
 export default User

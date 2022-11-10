@@ -24,7 +24,7 @@ export async function login(req, res) {
 
   if(!passwordCorrect) throw httpErrors.Unauthorized('You shall not pass')
 
-  user.token = Math.random().toString(36).slice(2, 7)
+  user.generateToken()
 
   await user.save()
 
