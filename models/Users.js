@@ -24,6 +24,10 @@ Schema.methods.generateToken = function () {
   user.token = Math.random().toString(36).slice(2, 7)
 }
 
+Schema.statics.findByToken = function (token) {
+  return User.findOne().where('token').equals(token)
+}
+
 const User = mongoose.model('User', Schema, 'users')
 
 export default User

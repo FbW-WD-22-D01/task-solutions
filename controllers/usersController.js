@@ -6,7 +6,7 @@ import User from '../models/Users.js'
 export async function register(req, res) {
   const user = new User(req.body)
   user.password = await bcrypt.hash(user.password, 10)
-  user.token = Math.random().toString(36).slice(2, 7)
+  user.generateToken()
 
   await user.save()
   res.status(201).send(user.token)
