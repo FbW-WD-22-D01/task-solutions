@@ -34,3 +34,18 @@ export async function login(req, res) {
 export async function getUser(req, res) {
   res.status(200).send(req.user)
 }
+
+/** @type {import("express").RequestHandler} */
+export async function changePassword(req, res) {
+  const user = req.user
+
+  const passwordCorrect = await bcrypt.compare(req.body.password, user.password)
+
+  if(!passwordCorrect) throw httpErrors.Unauthorized('Password not correct')
+
+  user.password = req.body.newPassword
+  await user.save()
+
+  res.status(204).send()
+}
+
