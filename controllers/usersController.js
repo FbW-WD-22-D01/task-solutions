@@ -49,3 +49,13 @@ export async function changePassword(req, res) {
   res.status(204).send()
 }
 
+/** @type {import("express").RequestHandler} */
+export async function logout(req, res) {
+  const user = req.user
+
+  user.token = undefined
+
+  await user.save()
+
+  res.status(204).send()
+}

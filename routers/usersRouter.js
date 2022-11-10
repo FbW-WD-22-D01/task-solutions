@@ -9,6 +9,7 @@ const app = express.Router()
 app.get('/', auth, controller.getUser)
 app.post('/register', validate(validations.register), controller.register)
 app.post('/login', validate(validations.login), controller.login)
+app.post('/logout', auth, controller.logout)
 
 app.post('/change-password', auth, validate(validations.changePassword), controller.changePassword)
 
