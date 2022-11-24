@@ -57,6 +57,8 @@ export function UserProvider (props:{children:React.ReactElement}) {
         .catch(e => e.response)
       
       if(response.status === 200) {
+        const userResponse = await axios.get('/user')
+        setUser(userResponse.data)
         return true
       }
       else {

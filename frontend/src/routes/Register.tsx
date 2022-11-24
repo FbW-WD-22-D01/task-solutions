@@ -1,7 +1,7 @@
 import './Register.css'
 import useUser from '../hooks/useUser'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Register () {
   const user = useUser()
@@ -9,12 +9,15 @@ export default function Register () {
   const [password, setPassword] = React.useState('')
   const [name, setName] = React.useState('')
   const [error, setError] = React.useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault()
     const success = await user.register(email, password, name)
 
     if(!success) setError(true)
+    else navigate('/')
+
   }
 
   return (

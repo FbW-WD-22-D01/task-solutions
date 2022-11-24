@@ -4,18 +4,30 @@ import Cart from "../models/Cart.js"
 
 export async function createUser (req, res) {
   const user = new User(req.body)
-  await user.save()
-
+  
   // Cart für neuen User erstellen
   const cart = await Cart.create({ user: user._id, products: [] })
+  
+  const token = user.generateAuthToken()
+  await user.save()
+
+  // Optionen für Cookie 
+  const cookieOptions = {
+    httpOnly: true,     // cookie vom js im frontend verborgen
+    secure: true,       // nur https Verbindungen
+    sameSite: 'lax'     // "none", "lax" --> default, "strict"
+  }
 
 
   // User und Cart zurückschicken
-  res.status(200).send({
-    message: 'user created',
-    user,
-    cart
-  })
+  res
+    .status(200)
+    .cookie('token', token, cookieOptions)
+    .send({
+      message: 'user created',
+      user,
+      cart
+    })
 }
 
 
